@@ -168,20 +168,14 @@ var app = new Vue({
             for (let dayKey in this.days) {
                 for (let eatTimeKey in this.eatTimes) {
                     var eatTime = this.daysMeals[dayKey][eatTimeKey];
+                    var eatTimeProducts = eatTime.getProducts();
 
-                    // products = products.concat(this.daysMeals[dayKey][eatTimeKey].getProducts());
-                    for (let product of this.daysMeals[dayKey][eatTimeKey].getProducts()){
-                        if (!searchByColumn(productsToBuyWithCount, "name", product.name)){
-                            productsToBuyWithCount.push(product);
-                        }
-
-                            // for (let searchProduct in products){
-                            // if (searchProduct.name == product.name)
-                            //     continue 2;
-                        // }
-                        // if (products.indexOf(product) < 0)
-                        //     products.push(product);
-                    }
+                    productsToBuyWithCount = productsToBuyWithCount.concat(eatTimeProducts);
+                    // for (let product of eatTimeProducts){
+                    //     if (!searchByColumn(productsToBuyWithCount, "name", product.name)){
+                    //         productsToBuyWithCount.push(product);
+                    //     }
+                    // }
 
                     // for (meal of this.daysMeals[dayKey][eatTimeKey].meals) {
                     //     // позиция может быть созадана, но не заполнена еще
@@ -198,7 +192,32 @@ var app = new Vue({
             }
             // debugger
 
-            return productsToBuyWithCount
+
+            var countGroupedByProducts = {};
+            var uniqueProductsToBuyWithCount = [];
+
+            for (let item of productsToBuyWithCount){
+                let addCount = round(item.count, 2) * this.peoples;
+
+                if (!countGroupedByProducts.hasOwnProperty(item.product.name)){
+                    // countGroupedByProducts[ item.product.name ] = [item];
+                    countGroupedByProducts[ item.product.name ] = addCount;
+                } else {
+                    let oldCount = countGroupedByProducts[ item.product.name ];
+                    // countGroupedByProducts[ item.product.name ].push(item);
+                    // countGroupedByProducts[ item.product.name ] += count;
+                    countGroupedByProducts[ item.product.name ] = round(oldCount + addCount, 2);
+                }
+            }
+            console.log(countGroupedByProducts);
+
+            // for (let item of countGroupedByProducts){
+            //     for (let productWith of countGroupedByProducts){
+            //
+            //     }
+            // }
+
+            return countGroupedByProducts
         }
     }
 });

@@ -19,3 +19,7 @@ function searchByColumn(collection, prop, value) {
 
     return null;
 }
+
+function round(number, decimals) {
+    return (parseFloat(number).toFixed(decimals) * 1);
+}
