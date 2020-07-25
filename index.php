@@ -135,6 +135,11 @@
         
         </template>
     </table>
+    <br>
+    Количество людей: <input type="text" v-model="peoples">
+    
+    <h2>Продукты для покупки</h2>
+    {{ totalProducts }}
     
     <br>
     <br>

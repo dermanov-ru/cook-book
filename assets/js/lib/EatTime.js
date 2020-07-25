@@ -11,4 +11,23 @@ class EatTime {
         this.name = name;
         this.meals = meals;
     }
+
+    getProducts(){
+        var result = [];
+
+        for (let meal of this.meals){
+            if (!meal.value)
+                continue;
+
+            result = result.concat(meal.value.getProducts());
+
+            // for (let product of meal.value.getProducts()){
+            //     if (result.indexOf(product) < 0)
+            //         result.push(product);
+            // }
+        }
+// debugger
+
+        return result;
+    }
 }
