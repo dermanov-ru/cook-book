@@ -167,12 +167,18 @@
     <br>
     <br>
     
-    <button @click="saveToStorage">Сохранить данные на диск</button>
+    <button @click="saveToStorage" style=" background: greenyellow;">Запомнить данные в браузере</button>
+    <button @click="downloadData" style=" background: greenyellow;">Скачать данные на диск</button>
     <br>
     <br>
-    <button @click="clearAll">Очистить всю таблицу</button>
-    <button @click="clearDaysMeals">Очистить расписание</button>
-    <button @click="clearDaysMealsAndMeals">Очистить расписание и блюда</button>
+    Загрузить данные с диска <input type="file" @change="uploadData">
+    <br>
+    <br>
+    <hr>
+    <br>
+    <button @click="clearAll" style=" color: red;">Очистить всю таблицу</button>
+    <button @click="clearDaysMeals" style=" color: red;">Очистить расписание</button>
+    <button @click="clearDaysMealsAndMeals" style=" color: red;">Очистить расписание и блюда</button>
     
     <br>
     <br>

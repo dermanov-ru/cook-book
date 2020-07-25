@@ -156,6 +156,32 @@ var app = new Vue({
             localStorage.daysMeals = objectToJson(this.daysMeals);
             console.log('Данные сохранены на диск.');
         },
+        downloadData() {
+            var obj = localStorage;
+            var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
+
+            var a = document.createElement('a');
+            a.href = 'data:' + data;
+            a.download = 'cookbook.json';
+            a.innerHTML = 'download JSON';
+
+            a.click();
+        },
+        uploadData(event) {
+            var input = event.target;
+
+            var reader = new FileReader();
+            reader.onload = function(){
+                var text = reader.result;
+                console.log(reader.result.substring(0, 200));
+            };
+            var fileContent = reader.readAsText(input.files[0]);
+
+            localStorage = fileContent;
+            this.loadFromStorage();
+
+            console.log('Данные загружены из файла.');
+        },
         clearAll() {
             if (!confirm("Точно все удалить?"))
                 return;
