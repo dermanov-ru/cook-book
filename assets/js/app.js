@@ -26,8 +26,6 @@ var app = new Vue({
         this.initDemoData();
         this.initDaysMealsStruct();
         this.initDemoDaysMeals();
-
-
     },
     methods : {
         initDemoData : function() {
@@ -63,38 +61,6 @@ var app = new Vue({
         },
         initDaysMealsStruct : function() {
             var daysMeals = {};
-            // var daysMeals = {
-            //     pn : {
-            //         zavtrak : clone(this.eatTimes.zavtrak),
-            //         obed : clone(this.eatTimes.obed),
-            //         poldnik : clone(this.eatTimes.poldnik),
-            //         yjin : clone(this.eatTimes.yjin),
-            //     },
-            //     // vt : {
-            //     //     zavtrak : clone(this.eatTimes.zavtrak),
-            //     //     obed : clone(this.eatTimes.obed),
-            //     //     poldnik : clone(this.eatTimes.zavtrak),
-            //     //     yjin : clone(this.eatTimes.zavtrak),
-            //     // },
-            //     // sr : {
-            //     //     zavtrak : clone(this.eatTimes.zavtrak),
-            //     //     obed : clone(this.eatTimes.obed),
-            //     //     poldnik : clone(this.eatTimes.zavtrak),
-            //     //     yjin : clone(this.eatTimes.zavtrak),
-            //     // },
-            //     // ch : {
-            //     //     zavtrak : this.eatTimes.zavtrak,
-            //     //     obed : this.eatTimes.zavtrak,
-            //     //     poldnik : this.eatTimes.zavtrak,
-            //     //     yjin : this.eatTimes.zavtrak,
-            //     // },
-            //     // pt : {
-            //     //     zavtrak : clone(this.eatTimes.zavtrak),
-            //     //     obed : clone(this.eatTimes.obed),
-            //     //     poldnik : clone(this.eatTimes.zavtrak),
-            //     //     yjin : clone(this.eatTimes.zavtrak),
-            //     // },
-            // };
 
             daysMeals.pn = {
                 zavtrak : new EatTime("Завтрак", []),
@@ -126,11 +92,6 @@ var app = new Vue({
                 poldnik : new EatTime("Полдник", []),
                 yjin : new EatTime("Ужин", []),
             };
-
-            // daysMeals.vt = clone(daysMeals.pn);
-            // daysMeals.sr = clone(daysMeals.pn);
-            // daysMeals.ch = clone(daysMeals.pn);
-            // daysMeals.pt = clone(daysMeals.pn);
 
             this.daysMeals = daysMeals;
         },
