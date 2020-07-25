@@ -18,27 +18,33 @@
     
     <table border="1">
         <tr >
-            <td>Id</td>
-            <td>Name</td>
+            <td>Номер</td>
+            <td>Название</td>
         </tr>
         
         <tr v-for="(m, index) in measures">
             <td>{{ index + 1 }}</td>
             <td><input type="text" v-model="m.name"></td>
         </tr>
+        <tr >
+            <td colspan="2" align="right"><button @click="addMeasure">Добавить</button></td>
+        </tr>
     </table>
-    <button @click="addMeasure">Add measure</button>
-    
+
+    <br>
+    <br>
+    <hr>
+    <br>
     
     
     <h2>Продукты</h2>
     
     <table border="1">
         <tr >
-            <td>Id</td>
-            <td>Name</td>
-            <td>Measure</td>
-            <td>Actual Count</td>
+            <td>Номер</td>
+            <td>название</td>
+            <td>Ед. изм.</td>
+            <td>Остаток в наличии</td>
         </tr>
         
         <tr v-for="(product, index) in products">
@@ -51,23 +57,30 @@
             </td>
             <td><input type="text" v-model="product.actualCount"></td>
         </tr>
+        
+        <tr >
+            <td colspan="4" align="right"><button @click="addProduct">Добавить</button></td>
+        </tr>
     </table>
-    <button @click="addProduct">Add product</button>
-    
+
+    <br>
+    <br>
+    <hr>
+    <br>
     
     <h2>Блюда</h2>
     
-    <template v-for="meal in meals">
+    <template v-for="(meal, index) in meals">
         <h3>{{ meal.name || "Укажите название блюда" }}</h3>
-        <h3><input type="text" v-model="meal.name"></h3>
+        <input type="text" v-model="meal.name"> <button @click="removeMeal(meals, index)">X</button>
         
         <h4>Состав и количество на 1 порцию</h4>
         <table border="1">
             <tr >
-                <td>Id</td>
+                <td>Номер</td>
                 <td>Продукт</td>
-                <td>Количество (ед. изм.)</td>
-                <td>ед. изм.</td>
+                <td>Ед. изм.</td>
+                <td>Количество</td>
             </tr>
         
             <tr v-for="(productAndCount, index) in meal.productsAndCounts">
@@ -79,14 +92,15 @@
                     </select>
                 </td>
                 
-                <td><input type="text" v-model="productAndCount.count" ></td>
                 <td>
                     <template v-if="productAndCount.product">{{ productAndCount.product.measure.name }}</template>
                 </td>
+                
+                <td><input type="text" v-model="productAndCount.count" ></td>
             </tr>
             
             <tr >
-                <td colspan="3" align="right"><button @click="addProductCount(meal)">Add</button></td>
+                <td colspan="4" align="right"><button @click="addProductCount(meal)">Добавить</button></td>
             </tr>
         </table>
     </template>
@@ -94,8 +108,12 @@
     <br>
 
     <h3>Добавить блюдо</h3>
-    <button @click="addMeal">Add</button>
-    
+    <button @click="addMeal">Добавить</button>
+
+    <br>
+    <br>
+    <hr>
+    <br>
     
     <h2>Расписание</h2>
     
@@ -172,10 +190,12 @@
     <br>
     <br>
     Загрузить данные с диска <input type="file" @change="uploadData">
+    
     <br>
     <br>
     <hr>
     <br>
+    
     <button @click="clearAll" style=" color: red;">Очистить всю таблицу</button>
     <button @click="clearDaysMeals" style=" color: red;">Очистить расписание</button>
     <button @click="clearDaysMealsAndMeals" style=" color: red;">Очистить расписание и блюда</button>

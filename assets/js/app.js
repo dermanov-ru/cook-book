@@ -115,6 +115,12 @@ var app = new Vue({
         addMeal : function() {
             this.meals.push(new Meal('', []));
         },
+        removeMeal : function(collection, index) {
+            if (!confirm("Точно удалить блюдо? Оно не должно где-то использоваться или будет ошибка!"))
+                return;
+
+            collection.splice(index, 1);
+        },
         addProductCount : function(meal) {
             meal.productsAndCounts.push(new ProductCount(null, 0));
         },
