@@ -163,6 +163,8 @@ var app = new Vue({
             console.log('Данные сохранены на диск.');
         },
         downloadData() {
+            this.saveToStorage();
+
             var obj = localStorage;
             var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
 
@@ -178,15 +180,19 @@ var app = new Vue({
 
             var reader = new FileReader();
             reader.onload = function(){
-                var text = reader.result;
-                console.log(reader.result.substring(0, 200));
-            };
-            var fileContent = reader.readAsText(input.files[0]);
+                var fileContent = reader.result;
+                var jsonObjectFromDisk = jsonToObject(fileContent);
 
-            localStorage = fileContent;
-            this.loadFromStorage();
+                localStorage.measures = jsonObjectFromDisk.measures;
+                localStorage.products = jsonObjectFromDisk.products;
+                localStorage.meals = jsonObjectFromDisk.meals;
+                localStorage.daysMeals = jsonObjectFromDisk.daysMeals;
 
-            console.log('Данные загружены из файла.');
+                this.loadFromStorage();
+
+                console.log('Данные загружены из файла.');
+            }.bind(this);
+            reader.readAsText(input.files[0]);
         },
         clearAll() {
             if (!confirm("Точно все удалить?"))
