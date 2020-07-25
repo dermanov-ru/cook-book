@@ -7,8 +7,9 @@
  */
 
 class Product {
-    constructor(name, measure) {
+    constructor(name, measure, actualCount) {
         this.name = name;
         this.measure = measure;
+        this.actualCount = actualCount;
     }
 }

@@ -38,6 +38,7 @@
             <td>Id</td>
             <td>Name</td>
             <td>Measure</td>
+            <td>Actual Count</td>
         </tr>
         
         <tr v-for="(product, index) in products">
@@ -48,6 +49,7 @@
                     <option v-for="m in measures" :value="m">{{m.name}}</option>
                 </select>
             </td>
+            <td><input type="text" v-model="product.actualCount"></td>
         </tr>
     </table>
     <button @click="addProduct">Add product</button>
@@ -136,10 +138,31 @@
         </template>
     </table>
     <br>
-    Количество людей: <input type="text" v-model="peoples">
     
-    <h2>Продукты для покупки</h2>
-    {{ totalProducts }}
+    <h2>Продукты для покупки, с учетом остатков</h2>
+    
+    Количество людей: <input type="text" v-model="peoples">
+    <br>
+    <br>
+    <table border="1">
+        <tr >
+            <td>Id</td>
+            <td>Продукт</td>
+            <td>Ед. изм</td>
+            <td>Остаток</td>
+            <td>Требуется</td>
+            <td>Купить</td>
+        </tr>
+        
+        <tr v-for="(item, productName, index) in totalProducts">
+            <td>{{ index + 1 }}</td>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.product.measure.name }}</td>
+            <td>{{ item.product.actualCount }}</td>
+            <td>{{ item.countToBuy }}</td>
+            <td>{{ formatToBuy(item.countToBuy, item.product.actualCount) }}</td>
+        </tr>
+    </table>
     
     <br>
     <br>

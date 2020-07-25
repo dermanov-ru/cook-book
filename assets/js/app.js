@@ -1,36 +1,9 @@
 var app = new Vue({
     el: '#app',
     data: {
-        measures: [
-            new Measure("Кг"),
-            new Measure("Шт"),
-            new Measure("Литр"),
-            new Measure("Половинка"),
-        ],
-        products: [
-            new Product("Meat", "kg"),
-            new Product("Potato", "kg"),
-            new Product("Bread", "items")
-        ],
-        meals : [
-            new Meal("Борщ", [
-                new ProductCount(new Product("Meat", "kg"), 0.1),
-                new ProductCount(new Product("Potato", "kg"), 0.05),
-            ]),
-            new Meal("Каша пшённая на молоке", [
-                new ProductCount(new Product("Meat", "kg"), 0.1),
-                new ProductCount(new Product("Potato", "kg"), 0.05),
-            ]),
-            new Meal("Бутерброд с сыром", [
-                new ProductCount(new Product("Meat", "kg"), 0.1),
-                new ProductCount(new Product("Potato", "kg"), 0.05),
-            ]),
-            new Meal("Какао", [
-                new ProductCount(new Product("Meat", "kg"), 0.1),
-                new ProductCount(new Product("Potato", "kg"), 0.05),
-            ]),
-        ],
-
+        measures: [],
+        products: [],
+        meals : [],
 
         days: {
             pn : new Day("Понедельник"),
@@ -50,85 +23,126 @@ var app = new Vue({
         peoples: 1,
     },
     mounted : function() {
-        var daysMeals = {};
-        // var daysMeals = {
-        //     pn : {
-        //         zavtrak : clone(this.eatTimes.zavtrak),
-        //         obed : clone(this.eatTimes.obed),
-        //         poldnik : clone(this.eatTimes.poldnik),
-        //         yjin : clone(this.eatTimes.yjin),
-        //     },
-        //     // vt : {
-        //     //     zavtrak : clone(this.eatTimes.zavtrak),
-        //     //     obed : clone(this.eatTimes.obed),
-        //     //     poldnik : clone(this.eatTimes.zavtrak),
-        //     //     yjin : clone(this.eatTimes.zavtrak),
-        //     // },
-        //     // sr : {
-        //     //     zavtrak : clone(this.eatTimes.zavtrak),
-        //     //     obed : clone(this.eatTimes.obed),
-        //     //     poldnik : clone(this.eatTimes.zavtrak),
-        //     //     yjin : clone(this.eatTimes.zavtrak),
-        //     // },
-        //     // ch : {
-        //     //     zavtrak : this.eatTimes.zavtrak,
-        //     //     obed : this.eatTimes.zavtrak,
-        //     //     poldnik : this.eatTimes.zavtrak,
-        //     //     yjin : this.eatTimes.zavtrak,
-        //     // },
-        //     // pt : {
-        //     //     zavtrak : clone(this.eatTimes.zavtrak),
-        //     //     obed : clone(this.eatTimes.obed),
-        //     //     poldnik : clone(this.eatTimes.zavtrak),
-        //     //     yjin : clone(this.eatTimes.zavtrak),
-        //     // },
-        // };
-
-        daysMeals.pn = {
-            zavtrak : new EatTime("Завтрак", []),
-            obed : new EatTime("Обед", []),
-            poldnik : new EatTime("Полдник", []),
-            yjin : new EatTime("Ужин", []),
-        };
-        daysMeals.vt = {
-            zavtrak : new EatTime("Завтрак", []),
-            obed : new EatTime("Обед", []),
-            poldnik : new EatTime("Полдник", []),
-            yjin : new EatTime("Ужин", []),
-        };
-        daysMeals.sr = {
-            zavtrak : new EatTime("Завтрак", []),
-            obed : new EatTime("Обед", []),
-            poldnik : new EatTime("Полдник", []),
-            yjin : new EatTime("Ужин", []),
-        };
-        daysMeals.ch = {
-            zavtrak : new EatTime("Завтрак", []),
-            obed : new EatTime("Обед", []),
-            poldnik : new EatTime("Полдник", []),
-            yjin : new EatTime("Ужин", []),
-        };
-        daysMeals.pt = {
-            zavtrak : new EatTime("Завтрак", []),
-            obed : new EatTime("Обед", []),
-            poldnik : new EatTime("Полдник", []),
-            yjin : new EatTime("Ужин", []),
-        };
-
-        // daysMeals.vt = clone(daysMeals.pn);
-        // daysMeals.sr = clone(daysMeals.pn);
-        // daysMeals.ch = clone(daysMeals.pn);
-        // daysMeals.pt = clone(daysMeals.pn);
-
-        // daysMeals.pn.zavtrak.meals.push({value : this.meals[1]});
-        // daysMeals.pn.zavtrak.meals.push({value : this.meals[2]});
-        // daysMeals.pn.zavtrak.meals.push({value : this.meals[3]});
+        this.initDemoData();
+        this.initDaysMealsStruct();
+        this.initDemoDaysMeals();
 
 
-
-        this.daysMeals = daysMeals;
     },
     methods : {
+        initDemoData : function() {
+            this.measures = [
+                new Measure("Кг"),
+                new Measure("Шт"),
+                new Measure("Литр"),
+                new Measure("Половинка"),
+            ];
+            this.products = [
+                new Product("Мясо", this.measures[0], 1),
+                new Product("Картошка", this.measures[0], 10),
+                new Product("Хлеб", this.measures[1], 2)
+            ];
+            this.meals = [
+                new Meal("Борщ", [
+                    new ProductCount(this.products[0], 0.1),
+                    new ProductCount(this.products[1], 0.05),
+                ]),
+                new Meal("Каша пшённая на молоке", [
+                    new ProductCount(this.products[0], 0.1),
+                    new ProductCount(this.products[1], 0.05),
+                ]),
+                new Meal("Бутерброд с сыром", [
+                    new ProductCount(this.products[0], 0.1),
+                    new ProductCount(this.products[1], 0.05),
+                ]),
+                new Meal("Какао", [
+                    new ProductCount(this.products[0], 0.1),
+                    new ProductCount(this.products[1], 0.05),
+                ]),
+            ];
+        },
+        initDaysMealsStruct : function() {
+            var daysMeals = {};
+            // var daysMeals = {
+            //     pn : {
+            //         zavtrak : clone(this.eatTimes.zavtrak),
+            //         obed : clone(this.eatTimes.obed),
+            //         poldnik : clone(this.eatTimes.poldnik),
+            //         yjin : clone(this.eatTimes.yjin),
+            //     },
+            //     // vt : {
+            //     //     zavtrak : clone(this.eatTimes.zavtrak),
+            //     //     obed : clone(this.eatTimes.obed),
+            //     //     poldnik : clone(this.eatTimes.zavtrak),
+            //     //     yjin : clone(this.eatTimes.zavtrak),
+            //     // },
+            //     // sr : {
+            //     //     zavtrak : clone(this.eatTimes.zavtrak),
+            //     //     obed : clone(this.eatTimes.obed),
+            //     //     poldnik : clone(this.eatTimes.zavtrak),
+            //     //     yjin : clone(this.eatTimes.zavtrak),
+            //     // },
+            //     // ch : {
+            //     //     zavtrak : this.eatTimes.zavtrak,
+            //     //     obed : this.eatTimes.zavtrak,
+            //     //     poldnik : this.eatTimes.zavtrak,
+            //     //     yjin : this.eatTimes.zavtrak,
+            //     // },
+            //     // pt : {
+            //     //     zavtrak : clone(this.eatTimes.zavtrak),
+            //     //     obed : clone(this.eatTimes.obed),
+            //     //     poldnik : clone(this.eatTimes.zavtrak),
+            //     //     yjin : clone(this.eatTimes.zavtrak),
+            //     // },
+            // };
+
+            daysMeals.pn = {
+                zavtrak : new EatTime("Завтрак", []),
+                obed : new EatTime("Обед", []),
+                poldnik : new EatTime("Полдник", []),
+                yjin : new EatTime("Ужин", []),
+            };
+            daysMeals.vt = {
+                zavtrak : new EatTime("Завтрак", []),
+                obed : new EatTime("Обед", []),
+                poldnik : new EatTime("Полдник", []),
+                yjin : new EatTime("Ужин", []),
+            };
+            daysMeals.sr = {
+                zavtrak : new EatTime("Завтрак", []),
+                obed : new EatTime("Обед", []),
+                poldnik : new EatTime("Полдник", []),
+                yjin : new EatTime("Ужин", []),
+            };
+            daysMeals.ch = {
+                zavtrak : new EatTime("Завтрак", []),
+                obed : new EatTime("Обед", []),
+                poldnik : new EatTime("Полдник", []),
+                yjin : new EatTime("Ужин", []),
+            };
+            daysMeals.pt = {
+                zavtrak : new EatTime("Завтрак", []),
+                obed : new EatTime("Обед", []),
+                poldnik : new EatTime("Полдник", []),
+                yjin : new EatTime("Ужин", []),
+            };
+
+            // daysMeals.vt = clone(daysMeals.pn);
+            // daysMeals.sr = clone(daysMeals.pn);
+            // daysMeals.ch = clone(daysMeals.pn);
+            // daysMeals.pt = clone(daysMeals.pn);
+
+            this.daysMeals = daysMeals;
+        },
+        initDemoDaysMeals : function() {
+            this.daysMeals.pn.zavtrak.meals.push({value : this.meals[1]});
+            this.daysMeals.pn.zavtrak.meals.push({value : this.meals[2]});
+            this.daysMeals.pn.zavtrak.meals.push({value : this.meals[3]});
+
+            this.daysMeals.pn.obed.meals.push({value : this.meals[1]});
+            this.daysMeals.pn.obed.meals.push({value : this.meals[2]});
+            this.daysMeals.pn.obed.meals.push({value : this.meals[3]});
+        },
         addMeasure : function() {
             this.measures.push(new Measure(""));
         },
@@ -149,6 +163,13 @@ var app = new Vue({
 
         removeDayEatTimeMeal (collection, index) {
             collection.splice(index, 1);
+        },
+
+        formatToBuy (toBuy, actualCount) {
+            if (actualCount >= toBuy)
+                return "Остатков достаточно";
+
+            return round(toBuy - actualCount, 2);
         }
     },
     computed: {
@@ -158,64 +179,32 @@ var app = new Vue({
 
             var productsToBuyWithCount = [];
 
-            // v-for="(eatTime, eatTimeKey, eatTimeIndex) in eatTimes"
-            //     eatTimes[eatTimeKey].name
-            //
-            //     v-for="(day, dayKey, dayIndex) in days"
-            //         v-for="(meal, mealIndex) in daysMeals[dayKey][eatTimeKey].meals"
-
-            // debugger
             for (let dayKey in this.days) {
                 for (let eatTimeKey in this.eatTimes) {
                     var eatTime = this.daysMeals[dayKey][eatTimeKey];
                     var eatTimeProducts = eatTime.getProducts();
 
                     productsToBuyWithCount = productsToBuyWithCount.concat(eatTimeProducts);
-                    // for (let product of eatTimeProducts){
-                    //     if (!searchByColumn(productsToBuyWithCount, "name", product.name)){
-                    //         productsToBuyWithCount.push(product);
-                    //     }
-                    // }
-
-                    // for (meal of this.daysMeals[dayKey][eatTimeKey].meals) {
-                    //     // позиция может быть созадана, но не заполнена еще
-                    //     var mealValue = meal.value;
-                    //     if (!mealValue)
-                    //         continue;
-                    //
-                    //     for (product of mealValue.getProducts()) {
-                    //         // eatTimes[eatTimeKey]
-                    //         products.push(product)
-                    //     }
-                    // }
                 }
             }
-            // debugger
 
 
             var countGroupedByProducts = {};
-            var uniqueProductsToBuyWithCount = [];
 
             for (let item of productsToBuyWithCount){
                 let addCount = round(item.count, 2) * this.peoples;
 
                 if (!countGroupedByProducts.hasOwnProperty(item.product.name)){
-                    // countGroupedByProducts[ item.product.name ] = [item];
-                    countGroupedByProducts[ item.product.name ] = addCount;
+                    countGroupedByProducts[ item.product.name ] = {
+                        product : item.product,
+                        countToBuy : addCount,
+                    };
                 } else {
-                    let oldCount = countGroupedByProducts[ item.product.name ];
-                    // countGroupedByProducts[ item.product.name ].push(item);
-                    // countGroupedByProducts[ item.product.name ] += count;
-                    countGroupedByProducts[ item.product.name ] = round(oldCount + addCount, 2);
+                    let oldCount = countGroupedByProducts[ item.product.name ].countToBuy;
+                    countGroupedByProducts[ item.product.name ].countToBuy = round(oldCount + addCount, 2);
                 }
             }
             console.log(countGroupedByProducts);
-
-            // for (let item of countGroupedByProducts){
-            //     for (let productWith of countGroupedByProducts){
-            //
-            //     }
-            // }
 
             return countGroupedByProducts
         }
