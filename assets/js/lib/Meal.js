@@ -11,19 +11,4 @@ class Meal {
         this.name = name;
         this.productsAndCounts = productsAndCounts;
     }
-
-    addProductWithCount = function (product, count){
-        this.productsAndCounts.push = new ProductCount(product, count);
-    };
-
-    getProducts(){
-        var result = [];
-
-        // debugger
-        for (let productAndCount of this.productsAndCounts){
-            result.push(productAndCount.product);
-        }
-
-        return result;
-    }
 }

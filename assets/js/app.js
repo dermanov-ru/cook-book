@@ -23,9 +23,11 @@ var app = new Vue({
         peoples: 1,
     },
     mounted : function() {
-        this.initDemoData();
+        // this.initDemoData();
         this.initDaysMealsStruct();
-        this.initDemoDaysMeals();
+        // this.initDemoDaysMeals();
+
+        this.loadFromStorage();
     },
     methods : {
         initDemoData : function() {
@@ -131,6 +133,50 @@ var app = new Vue({
                 return "Остатков достаточно";
 
             return round(toBuy - actualCount, 2);
+        },
+        loadFromStorage() {
+            if (localStorage.measures)
+                this.measures = jsonToObject(localStorage.measures);
+
+            if (localStorage.products)
+                this.products = jsonToObject(localStorage.products);
+
+            if (localStorage.meals)
+                this.meals = jsonToObject(localStorage.meals);
+
+            if (localStorage.daysMeals)
+                this.daysMeals = jsonToObject(localStorage.daysMeals);
+
+            console.log('Данные загружены с диска.');
+        },
+        saveToStorage() {
+            localStorage.measures = objectToJson(this.measures);
+            localStorage.products = objectToJson(this.products);
+            localStorage.meals = objectToJson(this.meals);
+            localStorage.daysMeals = objectToJson(this.daysMeals);
+            console.log('Данные сохранены на диск.');
+        },
+        clearAll() {
+            if (!confirm("Точно все удалить?"))
+                return;
+
+            this.initDaysMealsStruct();
+            this.meals = [];
+            this.products = [];
+            this.measures = [];
+        },
+        clearDaysMeals() {
+            if (!confirm("Точно удалить расписание?"))
+                return;
+
+            this.initDaysMealsStruct();
+        },
+        clearDaysMealsAndMeals() {
+            if (!confirm("Точно удалить расписание и блюда?"))
+                return;
+
+            this.initDaysMealsStruct();
+            this.meals = [];
         }
     },
     computed: {
@@ -143,7 +189,8 @@ var app = new Vue({
             for (let dayKey in this.days) {
                 for (let eatTimeKey in this.eatTimes) {
                     var eatTime = this.daysMeals[dayKey][eatTimeKey];
-                    var eatTimeProducts = eatTime.getProducts();
+                    var eatTimeProducts = EatTimeHelper.getProducts(eatTime);
+                    // var eatTimeProducts = eatTime.getProducts();
 
                     productsToBuyWithCount = productsToBuyWithCount.concat(eatTimeProducts);
                 }

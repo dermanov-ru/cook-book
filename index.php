@@ -166,6 +166,14 @@
     
     <br>
     <br>
+    
+    <button @click="saveToStorage">Сохранить данные на диск</button>
+    <br>
+    <br>
+    <button @click="clearAll">Очистить всю таблицу</button>
+    <button @click="clearDaysMeals">Очистить расписание</button>
+    <button @click="clearDaysMealsAndMeals">Очистить расписание и блюда</button>
+    
     <br>
     <br>
     

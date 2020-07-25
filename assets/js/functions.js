@@ -10,16 +10,13 @@ function clone(object) {
     return JSON.parse(JSON.stringify(object));
 }
 
-function searchByColumn(collection, prop, value) {
-    // debugger
-    for (let item of collection){
-        if (item[prop] == value)
-            return item;
-    }
-
-    return null;
-}
-
 function round(number, decimals) {
     return (parseFloat(number).toFixed(decimals) * 1);
+}
+
+function objectToJson(data) {
+    return JSON.stringify(data);
+}
+function jsonToObject(data) {
+    return JSON.parse(data);
 }
