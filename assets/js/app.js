@@ -11,6 +11,8 @@ var app = new Vue({
             sr : new Day("Среда"),
             ch : new Day("Четверг"),
             pt : new Day("Пятница"),
+            sb : new Day("Суббота"),
+            vs : new Day("Воскресенье"),
         },
         eatTimes: {
             zavtrak : new EatTime("Завтрак", []),
@@ -89,6 +91,18 @@ var app = new Vue({
                 yjin : new EatTime("Ужин", []),
             };
             daysMeals.pt = {
+                zavtrak : new EatTime("Завтрак", []),
+                obed : new EatTime("Обед", []),
+                poldnik : new EatTime("Полдник", []),
+                yjin : new EatTime("Ужин", []),
+            };
+            daysMeals.sb = {
+                zavtrak : new EatTime("Завтрак", []),
+                obed : new EatTime("Обед", []),
+                poldnik : new EatTime("Полдник", []),
+                yjin : new EatTime("Ужин", []),
+            };
+            daysMeals.vs = {
                 zavtrak : new EatTime("Завтрак", []),
                 obed : new EatTime("Обед", []),
                 poldnik : new EatTime("Полдник", []),

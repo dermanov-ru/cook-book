@@ -120,11 +120,7 @@
     <table border="1" width="100%" v-if="daysMeals">
         <tr>
             <td>Прием пищи</td>
-            <td>Понедельник</td>
-            <td>Вторник</td>
-            <td>Среда</td>
-            <td>Четверг</td>
-            <td>Пятница</td>
+            <td v-for="(day, dayKey, dayIndex) in days">{{ days[dayKey].name  }}</td>
         </tr>
         
         <template v-for="(eatTime, eatTimeKey, eatTimeIndex) in eatTimes">
