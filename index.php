@@ -172,7 +172,7 @@
             <td>{{ index + 1 }}</td>
             <td>{{ item.product.name }}</td>
             <td>{{ item.product.measure.name }}</td>
-            <td>{{ item.product.actualCount }}</td>
+            <td><input type="text" v-model="item.product.actualCount"></td>
             <td>{{ item.countToBuy }}</td>
             <td>{{ formatToBuy(item.countToBuy, item.product.actualCount) }}</td>
         </tr>
