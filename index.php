@@ -52,7 +52,7 @@
             <td><input type="text" v-model="product.name"></td>
             <td>
                 <select name="" id="" v-model="product.measure">
-                    <option v-for="m in measures" :value="m">{{m.name}}</option>
+                    <option v-for="m in measures" :value="m.id">{{m.name}}</option>
                 </select>
             </td>
             <td><input type="text" v-model="product.actualCount"></td>
@@ -88,12 +88,12 @@
                 
                 <td>
                     <select name="" id="" v-model="productAndCount.product">
-                        <option v-for="p in products" :value="p">{{p.name}}</option>
+                        <option v-for="p in products" :value="p.id">{{p.name}}</option>
                     </select>
                 </td>
                 
                 <td>
-                    <template v-if="productAndCount.product">{{ productAndCount.product.measure.name }}</template>
+                    <template v-if="productAndCount.product">{{ productMeasureName(productAndCount.product) }}</template>
                 </td>
                 
                 <td><input type="text" v-model="productAndCount.count" ></td>
@@ -170,11 +170,11 @@
         
         <tr v-for="(item, productName, index) in totalProducts">
             <td>{{ index + 1 }}</td>
-            <td>{{ item.product.name }}</td>
-            <td>{{ item.product.measure.name }}</td>
-            <td><input type="text" v-model="item.product.actualCount"></td>
+            <td>{{ findProduct(item.product).name }}</td>
+            <td>{{ productMeasureName(item.product) }}</td>
+            <td><input type="text" v-model="findProduct(item.product).actualCount"></td>
             <td>{{ item.countToBuy }}</td>
-            <td>{{ formatToBuy(item.countToBuy, item.product.actualCount) }}</td>
+            <td>{{ formatToBuy(item.countToBuy, findProduct(item.product).actualCount) }}</td>
         </tr>
     </table>
     

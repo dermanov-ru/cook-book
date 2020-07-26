@@ -20,3 +20,12 @@ function objectToJson(data) {
 function jsonToObject(data) {
     return JSON.parse(data);
 }
+
+function searchByProp(collection, prop, value) {
+    for (let item of collection){
+        if (item[prop] == value)
+            return item;
+    }
+
+    return null;
+}

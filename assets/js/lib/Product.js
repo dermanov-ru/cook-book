@@ -11,5 +11,6 @@ class Product {
         this.name = name;
         this.measure = measure;
         this.actualCount = actualCount;
+        this.id = Date.now();
     }
 }

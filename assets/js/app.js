@@ -167,6 +167,9 @@ var app = new Vue({
             if (localStorage.daysMeals)
                 this.daysMeals = jsonToObject(localStorage.daysMeals);
 
+            if (localStorage.peoples)
+                this.peoples = jsonToObject(localStorage.peoples);
+
             console.log('Данные загружены с диска.');
         },
         saveToStorage() {
@@ -174,6 +177,7 @@ var app = new Vue({
             localStorage.products = objectToJson(this.products);
             localStorage.meals = objectToJson(this.meals);
             localStorage.daysMeals = objectToJson(this.daysMeals);
+            localStorage.peoples = objectToJson(this.peoples);
             console.log('Данные сохранены на диск.');
         },
         downloadData() {
@@ -201,6 +205,7 @@ var app = new Vue({
                 localStorage.products = jsonObjectFromDisk.products;
                 localStorage.meals = jsonObjectFromDisk.meals;
                 localStorage.daysMeals = jsonObjectFromDisk.daysMeals;
+                localStorage.peoples = jsonObjectFromDisk.peoples;
 
                 this.loadFromStorage();
 
@@ -229,7 +234,24 @@ var app = new Vue({
 
             this.initDaysMealsStruct();
             this.meals = [];
-        }
+        },
+        findMeasure(id) {
+            var result = searchByProp(this.measures, "id", id);
+
+            return  result;
+        },
+        findProduct(id) {
+            var result = searchByProp(this.products, "id", id);
+
+            return  result;
+        },
+
+        productMeasureName(id) {
+            var product = this.findProduct(id);
+            var measure = this.findMeasure(product.measure);
+
+            return  measure.name;
+        },
     },
     computed: {
         totalProducts: function () {
@@ -248,20 +270,19 @@ var app = new Vue({
                 }
             }
 
-
             var countGroupedByProducts = {};
 
             for (let item of productsToBuyWithCount){
                 let addCount = round(item.count, 2) * this.peoples;
 
-                if (!countGroupedByProducts.hasOwnProperty(item.product.name)){
-                    countGroupedByProducts[ item.product.name ] = {
+                if (!countGroupedByProducts.hasOwnProperty(item.product)){
+                    countGroupedByProducts[ item.product ] = {
                         product : item.product,
                         countToBuy : addCount,
                     };
                 } else {
-                    let oldCount = countGroupedByProducts[ item.product.name ].countToBuy;
-                    countGroupedByProducts[ item.product.name ].countToBuy = round(oldCount + addCount, 2);
+                    let oldCount = countGroupedByProducts[ item.product ].countToBuy;
+                    countGroupedByProducts[ item.product ].countToBuy = round(oldCount + addCount, 2);
                 }
             }
             console.log(countGroupedByProducts);

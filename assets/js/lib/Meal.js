@@ -10,5 +10,6 @@ class Meal {
     constructor(name, productsAndCounts){
         this.name = name;
         this.productsAndCounts = productsAndCounts;
+        this.id = Date.now();
     }
 }
