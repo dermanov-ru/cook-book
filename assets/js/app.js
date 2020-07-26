@@ -253,6 +253,10 @@ var app = new Vue({
 
             return  measure.name;
         },
+
+        round(number) {
+            return  round(number, 2);
+        },
     },
     computed: {
         totalProducts: function () {

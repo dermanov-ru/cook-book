@@ -162,19 +162,19 @@
         <tr >
             <td>Id</td>
             <td>Продукт</td>
-            <td>Ед. изм</td>
             <td>Остаток</td>
             <td>Требуется</td>
             <td>Купить</td>
+            <td>Ед. изм</td>
         </tr>
         
         <tr v-for="(item, productName, index) in totalProducts">
             <td>{{ index + 1 }}</td>
             <td>{{ findProduct(item.product).name }}</td>
-            <td>{{ productMeasureName(item.product) }}</td>
-            <td><input type="text" v-model="findProduct(item.product).actualCount"></td>
-            <td>{{ item.countToBuy }}</td>
+            <td><input type="text" v-model="findProduct(item.product).actualCount" style=" border: 1px dotted;"></td>
+            <td>{{ round(item.countToBuy) }}</td>
             <td>{{ formatToBuy(item.countToBuy, findProduct(item.product).actualCount) }}</td>
+            <td>{{ productMeasureName(item.product) }}</td>
         </tr>
     </table>
     
