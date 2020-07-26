@@ -221,6 +221,7 @@ var app = new Vue({
             this.meals = [];
             this.products = [];
             this.measures = [];
+            this.peoples = 1;
         },
         clearDaysMeals() {
             if (!confirm("Точно удалить расписание?"))
