@@ -7,7 +7,8 @@
  */
 
 class Day {
-    constructor(name){
+    constructor(name, peoples){
         this.name = name;
+        this.peoples = peoples || 1;
     }
 }

@@ -10,7 +10,7 @@ class Product {
     constructor(name, measure, actualCount) {
         this.name = name;
         this.measure = measure;
-        this.actualCount = actualCount;
+        this.actualCount = actualCount || 0;
         this.id = Date.now();
     }
 }

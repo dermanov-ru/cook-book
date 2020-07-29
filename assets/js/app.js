@@ -21,8 +21,6 @@ var app = new Vue({
             yjin : new EatTime("Ужин", []),
         },
         daysMeals: null,
-
-        peoples: 1,
     },
     mounted : function() {
         // this.initDemoData();
@@ -155,6 +153,9 @@ var app = new Vue({
             return round( round(toBuy, 2) - round(actualCount, 2), 2);
         },
         loadFromStorage() {
+            if (localStorage.days)
+                this.days = jsonToObject(localStorage.days);
+
             if (localStorage.measures)
                 this.measures = jsonToObject(localStorage.measures);
 
@@ -167,17 +168,14 @@ var app = new Vue({
             if (localStorage.daysMeals)
                 this.daysMeals = jsonToObject(localStorage.daysMeals);
 
-            if (localStorage.peoples)
-                this.peoples = jsonToObject(localStorage.peoples);
-
             console.log('Данные загружены с диска.');
         },
         saveToStorage() {
+            localStorage.days = objectToJson(this.days);
             localStorage.measures = objectToJson(this.measures);
             localStorage.products = objectToJson(this.products);
             localStorage.meals = objectToJson(this.meals);
             localStorage.daysMeals = objectToJson(this.daysMeals);
-            localStorage.peoples = objectToJson(this.peoples);
             console.log('Данные сохранены на диск.');
         },
         downloadData() {
@@ -201,11 +199,11 @@ var app = new Vue({
                 var fileContent = reader.result;
                 var jsonObjectFromDisk = jsonToObject(fileContent);
 
+                localStorage.days = jsonObjectFromDisk.days;
                 localStorage.measures = jsonObjectFromDisk.measures;
                 localStorage.products = jsonObjectFromDisk.products;
                 localStorage.meals = jsonObjectFromDisk.meals;
                 localStorage.daysMeals = jsonObjectFromDisk.daysMeals;
-                localStorage.peoples = jsonObjectFromDisk.peoples;
 
                 this.loadFromStorage();
 
@@ -263,33 +261,31 @@ var app = new Vue({
             if (!this.daysMeals)
                 return {};
 
-            var productsToBuyWithCount = [];
+            var countGroupedByProducts = {};
 
             for (let dayKey in this.days) {
+                var day = this.days[dayKey];
+
                 for (let eatTimeKey in this.eatTimes) {
                     var eatTime = this.daysMeals[dayKey][eatTimeKey];
                     var eatTimeProducts = EatTimeHelper.getProducts(eatTime);
-                    // var eatTimeProducts = eatTime.getProducts();
 
-                    productsToBuyWithCount = productsToBuyWithCount.concat(eatTimeProducts);
+                    for (let item of eatTimeProducts){
+                        let addCount = round(item.count, 2) * day.peoples;
+
+                        if (!countGroupedByProducts.hasOwnProperty(item.product)){
+                            countGroupedByProducts[ item.product ] = {
+                                product : item.product,
+                                countToBuy : addCount,
+                            };
+                        } else {
+                            let oldCount = countGroupedByProducts[ item.product ].countToBuy;
+                            countGroupedByProducts[ item.product ].countToBuy = round(oldCount + addCount, 2);
+                        }
+                    }
                 }
             }
 
-            var countGroupedByProducts = {};
-
-            for (let item of productsToBuyWithCount){
-                let addCount = round(item.count, 2) * this.peoples;
-
-                if (!countGroupedByProducts.hasOwnProperty(item.product)){
-                    countGroupedByProducts[ item.product ] = {
-                        product : item.product,
-                        countToBuy : addCount,
-                    };
-                } else {
-                    let oldCount = countGroupedByProducts[ item.product ].countToBuy;
-                    countGroupedByProducts[ item.product ].countToBuy = round(oldCount + addCount, 2);
-                }
-            }
             console.log(countGroupedByProducts);
 
             return countGroupedByProducts

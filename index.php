@@ -123,6 +123,14 @@
             <td v-for="(day, dayKey, dayIndex) in days">{{ days[dayKey].name  }}</td>
         </tr>
         
+        <tr>
+            <td>Количество людей:</td>
+            <td v-for="(day, dayKey, dayIndex) in days">
+                <input type="text" v-model="day.peoples">
+            </td>
+            
+        </tr>
+        
         <template v-for="(eatTime, eatTimeKey, eatTimeIndex) in eatTimes">
             <tr>
                 <td>{{ eatTimes[eatTimeKey].name  }}</td>
@@ -155,9 +163,6 @@
     
     <h2>Продукты для покупки, с учетом остатков</h2>
     
-    Количество людей: <input type="text" v-model="peoples">
-    <br>
-    <br>
     <table border="1">
         <tr >
             <td>Id</td>

@@ -9,6 +9,6 @@
 class ProductCount {
     constructor(product, count){
         this.product = product;
-        this.count = count;
+        this.count = count || 0;
     }
 }
