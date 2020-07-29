@@ -145,6 +145,17 @@
                                             <option v-for="m in meals" :value="m">{{m.name}}</option>
                                         </select>
                                         <button @click="removeDayEatTimeMeal(daysMeals[dayKey][eatTimeKey].meals, mealIndex)">X</button>
+
+                                        <br>
+                                        
+                                        (
+                                        <template v-for="(productsAndCount, productsAndCountIndex) in meal.value.productsAndCounts">
+                                            {{findProduct(productsAndCount.product).name}} X {{ round( round(productsAndCount.count, 2) * day.peoples) }} {{productMeasureName(productsAndCount.product)}}
+                                            <template v-if="productsAndCountIndex < meal.value.productsAndCounts.length - 1">
+                                                ,<br>
+                                            </template>
+                                        </template>
+                                        )
                                     </td>
                                 </tr>
                             </template>
