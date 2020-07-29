@@ -115,7 +115,7 @@
     <hr>
     <br>
     
-    <h2>Расписание</h2>
+    <h2>Меню</h2>
     
     <table border="1" width="100%" v-if="daysMeals">
         <tr>
