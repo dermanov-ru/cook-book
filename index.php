@@ -243,9 +243,9 @@
 
     foreach ( $jsFiles as $jsFile ) {
     ?>
-    <script src="/assets/js/lib/<?=basename($jsFile)?>"></script>
+    <script src="/assets/js/lib/<?=basename($jsFile)?>?v=<?=filemtime(__DIR__ . "/assets/js/lib/" . basename($jsFile))?>"></script>
     
 <? } ?>
 
-<script src="/assets/js/functions.js"></script>
-<script src="/assets/js/app.js"></script>
+<script src="/assets/js/functions.js?v=<?=filemtime(__DIR__ . "/assets/js/functions.js")?>"></script>
+<script src="/assets/js/app.js?v=<?=filemtime(__DIR__ . "/assets/js/app.js")?>"></script>
