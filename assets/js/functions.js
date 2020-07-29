@@ -11,7 +11,9 @@ function clone(object) {
 }
 
 function round(number, decimals) {
-    return (parseFloat(number).toFixed(decimals) * 1);
+    var numberWithDot = (number + "").replace(/,/g, '.');
+
+    return parseFloat(numberWithDot).toFixed(decimals) * 1;
 }
 
 function objectToJson(data) {

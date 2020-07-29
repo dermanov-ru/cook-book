@@ -152,7 +152,7 @@ var app = new Vue({
             if (actualCount >= toBuy)
                 return "Остатков достаточно";
 
-            return round(toBuy - actualCount, 2);
+            return round( round(toBuy, 2) - round(actualCount, 2), 2);
         },
         loadFromStorage() {
             if (localStorage.measures)
