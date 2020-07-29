@@ -147,7 +147,7 @@ var app = new Vue({
         },
 
         formatToBuy (toBuy, actualCount) {
-            if (actualCount >= toBuy)
+            if ( round(actualCount, 2) >= round(toBuy, 2) )
                 return "Остатков достаточно";
 
             return round( round(toBuy, 2) - round(actualCount, 2), 2);
