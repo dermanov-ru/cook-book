@@ -68,7 +68,7 @@
     <hr>
     <br>
     
-    <h2>Блюда</h2>
+    <h2>Рецепты</h2>
     
     <template v-for="(meal, index) in meals">
         <h3>{{ meal.name || "Укажите название блюда" }}</h3>
@@ -107,7 +107,7 @@
     
     <br>
 
-    <h3>Добавить блюдо</h3>
+    <h3>Добавить рецепт</h3>
     <button @click="addMeal">Добавить</button>
 
     <br>
@@ -142,17 +142,19 @@
                                     <td>
                                         <select name="" id="" v-model="meal.value">
                                             <option value="">- Выбрать -</option>
-                                            <option v-for="m in meals" :value="m">{{m.name}}</option>
+                                            <option v-for="m in meals" :value="m.id">{{m.name}}</option>
                                         </select>
                                         <button @click="removeDayEatTimeMeal(daysMeals[dayKey][eatTimeKey].meals, mealIndex)">X</button>
 
                                         <br>
                                         
                                         (
-                                        <template v-for="(productsAndCount, productsAndCountIndex) in meal.value.productsAndCounts">
-                                            {{findProduct(productsAndCount.product).name}} X {{ round( round(productsAndCount.count, 2) * day.peoples) }} {{productMeasureName(productsAndCount.product)}}
-                                            <template v-if="productsAndCountIndex < meal.value.productsAndCounts.length - 1">
-                                                ,<br>
+                                        <template v-if="meal.value">
+                                            <template  v-for="(productsAndCount, productsAndCountIndex) in findMeal(meal.value).productsAndCounts">
+                                                {{findProduct(productsAndCount.product).name}} X {{ round( round(productsAndCount.count, 2) * day.peoples) }} {{productMeasureName(productsAndCount.product)}}
+                                                <template v-if="productsAndCountIndex < findMeal(meal.value).productsAndCounts.length - 1">
+                                                    ,<br>
+                                                </template>
                                             </template>
                                         </template>
                                         )

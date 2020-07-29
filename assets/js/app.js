@@ -237,12 +237,17 @@ var app = new Vue({
         findMeasure(id) {
             var result = searchByProp(this.measures, "id", id);
 
-            return  result;
+            return  result || new Product("- Не выбрано -");
         },
         findProduct(id) {
             var result = searchByProp(this.products, "id", id);
 
-            return  result;
+            return  result || new Product("- Не выбрано -");
+        },
+        findMeal(id) {
+            var result = searchByProp(this.meals, "id", id);
+
+            return  result || new Meal("- Не выбрано -", []);
         },
 
         productMeasureName(id) {
@@ -272,7 +277,7 @@ var app = new Vue({
 
                 for (let eatTimeKey in this.eatTimes) {
                     var eatTime = this.daysMeals[dayKey][eatTimeKey];
-                    var eatTimeProducts = EatTimeHelper.getProducts(eatTime);
+                    var eatTimeProducts = this.getEatTimeProducts(eatTime);
 
                     for (let item of eatTimeProducts){
                         let addCount = round(item.count, 2) * day.peoples;
@@ -294,6 +299,19 @@ var app = new Vue({
 
             return countGroupedByProducts
         },
+
+        getEatTimeProducts : function (eatTime){
+            var result = [];
+
+            for (let meal of eatTime.meals){
+                if (!meal.value)
+                    continue;
+
+                result = result.concat( this.findMeal(meal.value).productsAndCounts );
+            }
+
+            return result;
+        }
     },
     computed: {
         productsForAllDays: function () {
