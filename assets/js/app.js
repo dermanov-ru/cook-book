@@ -255,15 +255,19 @@ var app = new Vue({
         round(number) {
             return  round(number, 2);
         },
-    },
-    computed: {
-        totalProducts: function () {
+        productsPerDay: function (dayKey) {
+            var days = {};
+            days[ dayKey ] = this.days[dayKey];
+
+            return this.productsForDays( days );
+        },
+        productsForDays: function (days) {
             if (!this.daysMeals)
                 return {};
 
             var countGroupedByProducts = {};
 
-            for (let dayKey in this.days) {
+            for (let dayKey in days) {
                 var day = this.days[dayKey];
 
                 for (let eatTimeKey in this.eatTimes) {
@@ -285,6 +289,15 @@ var app = new Vue({
                     }
                 }
             }
+
+            console.log(countGroupedByProducts);
+
+            return countGroupedByProducts
+        },
+    },
+    computed: {
+        productsForAllDays: function () {
+            var countGroupedByProducts = this.productsForDays(this.days);
 
             console.log(countGroupedByProducts);
 

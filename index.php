@@ -124,11 +124,10 @@
         </tr>
         
         <tr>
-            <td>Количество людей:</td>
+            <td>Количество людей</td>
             <td v-for="(day, dayKey, dayIndex) in days">
                 <input type="text" v-model="day.peoples">
             </td>
-            
         </tr>
         
         <template v-for="(eatTime, eatTimeKey, eatTimeIndex) in eatTimes">
@@ -158,10 +157,20 @@
             </tr>
         
         </template>
+
+        <tr>
+            <td>Расход продуктов на день</td>
+            <td v-for="(day, dayKey, dayIndex) in days">
+                <?
+                require __DIR__ . "/blocks/day_products.php";
+                ?>
+            </td>
+        </tr>
+        
     </table>
     <br>
     
-    <h2>Продукты для покупки, с учетом остатков</h2>
+    <h2>Расход продуктов на неделю, с учетом остатков</h2>
     
     <table border="1">
         <tr >
@@ -173,7 +182,7 @@
             <td>Ед. изм</td>
         </tr>
         
-        <tr v-for="(item, productName, index) in totalProducts">
+        <tr v-for="(item, productName, index) in productsForAllDays">
             <td>{{ index + 1 }}</td>
             <td>{{ findProduct(item.product).name }}</td>
             <td><input type="text" v-model="findProduct(item.product).actualCount" style=" border: 1px dotted;"></td>
