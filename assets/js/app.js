@@ -3,6 +3,7 @@ var app = new Vue({
     data: {
         // режим работы редактора
         editorMode: "daySheduleMode",
+        menuEditorShowDays: "workdays",
         measures: [],
         products: [],
         meals : [],
@@ -331,6 +332,33 @@ var app = new Vue({
             console.log(countGroupedByProducts);
 
             return countGroupedByProducts
+        },
+        menuEditorSeelctedDays: function () {
+            var menuEditorSeelctedDays = {};
+
+            switch (this.menuEditorShowDays) {
+                case "all" :
+                    menuEditorSeelctedDays = this.days;
+                break;
+                case "workdays" :
+                    menuEditorSeelctedDays[ "pn" ] = this.days["pn"];
+                    menuEditorSeelctedDays[ "vt" ] = this.days["vt"];
+                    menuEditorSeelctedDays[ "sr" ] = this.days["sr"];
+                    menuEditorSeelctedDays[ "ch" ] = this.days["ch"];
+                    menuEditorSeelctedDays[ "pt" ] = this.days["pt"];
+                break;
+                case "weekend" :
+                    menuEditorSeelctedDays[ "sb" ] = this.days["sb"];
+                    menuEditorSeelctedDays[ "vs" ] = this.days["vs"];
+                break;
+                default :
+                    menuEditorSeelctedDays[ this.menuEditorShowDays ] = this.days[ this.menuEditorShowDays ];
+                break;
+            }
+
+            console.log(menuEditorSeelctedDays);
+
+            return menuEditorSeelctedDays
         }
     }
 });

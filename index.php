@@ -142,24 +142,41 @@
     <template v-if="editorMode == 'daySheduleMode'">
         <h2>Меню</h2>
 
-        <table border="1" width="100%" v-if="daysMeals">
+        <span>Дни недели</span>
+        <select name="" id="" v-model="menuEditorShowDays">
+            <option value="all">Все</option>
+            <option value="pn">Пн</option>
+            <option value="vt">Вт</option>
+            <option value="sr">Ср</option>
+            <option value="ch">Чт</option>
+            <option value="pt">Пт</option>
+            <option value="sb">Сб</option>
+            <option value="vs">Вс</option>
+            <option value="workdays">Будни</option>
+            <option value="weekend">Выходные</option>
+        </select>
+
+        <br>
+        <br>
+
+        <table border="1" width="auto" v-if="daysMeals">
             <tr>
                 <th>Прием пищи</th>
-                <th v-for="(day, dayKey, dayIndex) in days">{{ days[dayKey].name  }}</th>
+                <th v-for="(day, dayKey, dayIndex) in menuEditorSeelctedDays">{{ menuEditorSeelctedDays[dayKey].name  }}</th>
             </tr>
 
             <tr>
                 <th>Количество людей</th>
-                <td v-for="(day, dayKey, dayIndex) in days">
+                <td v-for="(day, dayKey, dayIndex) in menuEditorSeelctedDays">
                     <input type="text" v-model="day.peoples" style="width: 90%; padding-left: 5px; margin: auto; display: block;">
                 </td>
             </tr>
 
             <template v-for="(eatTime, eatTimeKey, eatTimeIndex) in eatTimes">
                 <tr>
-                    <th>{{ eatTimes[eatTimeKey].name  }}</th>
+                    <th>{{ eatTimes[eatTimeKey].name}}</th>
 
-                    <template v-for="(day, dayKey, dayIndex) in days">
+                    <template v-for="(day, dayKey, dayIndex) in menuEditorSeelctedDays">
                         <td>
                             <table border="1">
                                 <tr >
@@ -216,7 +233,7 @@
 
             <tr>
                 <th>Расход продуктов на день</th>
-                <td v-for="(day, dayKey, dayIndex) in days">
+                <td v-for="(day, dayKey, dayIndex) in menuEditorSeelctedDays">
                     <?
                     require __DIR__ . "/blocks/day_products.php";
                     ?>
