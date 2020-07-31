@@ -113,7 +113,7 @@
 
                             <td>
                                 <select name="" id="" v-model="productAndCount.product">
-                                    <option v-for="p in products" :value="p.id">{{p.name}}</option>
+                                    <option v-for="p in products" :value="p.id">{{itemPosition(products, p, true)}} {{p.name}}</option>
                                 </select>
                             </td>
 
@@ -138,6 +138,7 @@
  
     </template>
 
+    
     <template v-if="editorMode == 'daySheduleMode'">
         <h2>Меню</h2>
 
@@ -166,7 +167,7 @@
                                         <td>
                                             <select name="" id="" v-model="meal.value">
                                                 <option value="">- Выбрать -</option>
-                                                <option v-for="m in meals" :value="m.id">{{m.name}}</option>
+                                                <option v-for="m in meals" :value="m.id">{{itemPosition(meals, m, true)}} {{m.name}}</option>
                                             </select>
                                             <button @click="removeDayEatTimeMeal(daysMeals[dayKey][eatTimeKey].meals, mealIndex)">X</button>
 
@@ -245,8 +246,8 @@
     <br>
     
     <button @click="clearAll" style=" color: red;">Очистить всю таблицу</button>
-    <button @click="clearDaysMeals" style=" color: red;">Очистить расписание</button>
-    <button @click="clearDaysMealsAndMeals" style=" color: red;">Очистить расписание и блюда</button>
+    <button @click="clearDaysMeals" style=" color: red;">Очистить меню</button>
+    <button @click="clearDaysMealsAndMeals" style=" color: red;">Очистить меню и рецепты</button>
     
     <br>
     <br>

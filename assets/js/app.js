@@ -313,6 +313,15 @@ var app = new Vue({
             }
 
             return result;
+        },
+
+        itemPosition : function (collection, item, withBracket){
+            let position = collection.indexOf(item) + 1;
+
+            if (withBracket)
+                position += ")";
+
+            return position;
         }
     },
     computed: {
