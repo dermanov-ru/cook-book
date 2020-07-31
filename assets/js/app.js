@@ -1,6 +1,8 @@
 var app = new Vue({
     el: '#app',
     data: {
+        // режим работы редактора
+        editorMode: "daySheduleMode",
         measures: [],
         products: [],
         meals : [],
