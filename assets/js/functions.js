@@ -13,7 +13,7 @@ function clone(object) {
 function round(number, decimals) {
     var numberWithDot = (number + "").replace(/,/g, '.');
 
-    return parseFloat(numberWithDot).toFixed(decimals) * 1;
+    return parseFloat(numberWithDot).toFixed(decimals) * 1 || 0;
 }
 
 function objectToJson(data) {
