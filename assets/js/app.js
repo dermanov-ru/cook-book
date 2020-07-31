@@ -148,11 +148,11 @@ var app = new Vue({
             collection.splice(index, 1);
         },
 
-        formatToBuy (toBuy, actualCount) {
-            if ( round(actualCount, 2) >= round(toBuy, 2) )
+        formatToBuy (productId, toBuyCount, actualCount) {
+            if ( round(actualCount, 2) >= round(toBuyCount, 2) )
                 return "Остатков достаточно";
 
-            return round( round(toBuy, 2) - round(actualCount, 2), 2);
+            return round( round(toBuyCount, 2) - round(actualCount, 2), 2) + " " + this.productMeasureName(productId);
         },
         loadFromStorage() {
             if (localStorage.days)

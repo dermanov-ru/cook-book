@@ -30,8 +30,8 @@
 
         <table border="1">
             <tr >
-                <td>Номер</td>
-                <td>Название</td>
+                <th>Номер</th>
+                <th>Название</th>
             </tr>
 
             <tr v-for="(m, index) in measures">
@@ -54,10 +54,10 @@
 
         <table border="1">
             <tr >
-                <td>Номер</td>
-                <td>название</td>
-                <td>Ед. изм.</td>
-                <td>Остаток в наличии</td>
+                <th>Номер</th>
+                <th>название</th>
+                <th>Ед. изм.</th>
+                <th>Остаток в наличии</th>
             </tr>
 
             <tr v-for="(product, index) in products">
@@ -85,53 +85,57 @@
     <template v-if="editorMode == 'receptMode'">
         <h2>Рецепты</h2>
 
-        <template v-for="(meal, index) in meals">
-<!--            <h3>{{ meal.name || "Укажите название блюда" }}</h3>-->
-            Название рецепта: <input type="text" v-model="meal.name"> <button @click="removeMeal(meals, index)">X</button>
+        <table border="1">
+            <tr >
+                <th align="center">Номер</th>
+                <th>Название</th>
+                <th>Состав и количество на 1 порцию</th>
+            </tr>
 
-            <h4>Состав и количество на 1 порцию</h4>
-            <table border="1">
-                <tr >
-                    <td>Номер</td>
-                    <td>Продукт</td>
-                    <td>Ед. изм.</td>
-                    <td>Количество</td>
-                </tr>
+            <tr v-for="(meal, index) in meals">
+                <td>{{ index + 1 }}</td>
+                <td>
+                    <input type="text" v-model="meal.name">
+                    <button @click="removeMeal(meals, index)">X</button>
+                </td>
+                
+                <td>
+                    <table border="1">
+                        <tr >
+                            <th>Номер</th>
+                            <th>Продукт</th>
+                            <th>Ед. изм.</th>
+                            <th>Количество</th>
+                        </tr>
 
-                <tr v-for="(productAndCount, index) in meal.productsAndCounts">
-                    <td>{{ index + 1 }}</td>
+                        <tr v-for="(productAndCount, index) in meal.productsAndCounts">
+                            <td>{{ index + 1 }}</td>
 
-                    <td>
-                        <select name="" id="" v-model="productAndCount.product">
-                            <option v-for="p in products" :value="p.id">{{p.name}}</option>
-                        </select>
-                    </td>
+                            <td>
+                                <select name="" id="" v-model="productAndCount.product">
+                                    <option v-for="p in products" :value="p.id">{{p.name}}</option>
+                                </select>
+                            </td>
 
-                    <td>
-                        <template v-if="productAndCount.product">{{ productMeasureName(productAndCount.product) }}</template>
-                    </td>
+                            <td>
+                                <template v-if="productAndCount.product">{{ productMeasureName(productAndCount.product) }}</template>
+                            </td>
 
-                    <td><input type="text" v-model="productAndCount.count" ></td>
-                </tr>
+                            <td><input type="text" v-model="productAndCount.count" ></td>
+                        </tr>
 
-                <tr >
-                    <td colspan="4" align="right"><button @click="addProductCount(meal)">Добавить</button></td>
-                </tr>
-            </table>
-
-            <br>
-            <br>
-        </template>
-
-        <br>
-
-        <h3>Добавить рецепт</h3>
-        <button @click="addMeal">Добавить</button>
-
-        <br>
-        <br>
-        <hr>
-        <br>
+                        <tr >
+                            <td colspan="4" align="right"><button @click="addProductCount(meal)">Добавить</button></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr >
+                <td colspan="2" align="right"><button @click="addMeal">Добавить</button></td>
+            </tr>
+        </table>
+ 
     </template>
 
     <template v-if="editorMode == 'daySheduleMode'">
@@ -139,12 +143,12 @@
 
         <table border="1" width="100%" v-if="daysMeals">
             <tr>
-                <td>Прием пищи</td>
-                <td v-for="(day, dayKey, dayIndex) in days">{{ days[dayKey].name  }}</td>
+                <th>Прием пищи</th>
+                <th v-for="(day, dayKey, dayIndex) in days">{{ days[dayKey].name  }}</th>
             </tr>
 
             <tr>
-                <td>Количество людей</td>
+                <th>Количество людей</th>
                 <td v-for="(day, dayKey, dayIndex) in days">
                     <input type="text" v-model="day.peoples">
                 </td>
@@ -152,7 +156,7 @@
 
             <template v-for="(eatTime, eatTimeKey, eatTimeIndex) in eatTimes">
                 <tr>
-                    <td>{{ eatTimes[eatTimeKey].name  }}</td>
+                    <th>{{ eatTimes[eatTimeKey].name  }}</th>
 
                     <template v-for="(day, dayKey, dayIndex) in days">
                         <td>
@@ -192,7 +196,7 @@
             </template>
 
             <tr>
-                <td>Расход продуктов на день</td>
+                <th>Расход продуктов на день</th>
                 <td v-for="(day, dayKey, dayIndex) in days">
                     <?
                     require __DIR__ . "/blocks/day_products.php";
@@ -209,21 +213,19 @@
 
         <table border="1">
             <tr >
-                <td>Id</td>
-                <td>Продукт</td>
-                <td>Остаток</td>
-                <td>Требуется</td>
-                <td>Купить</td>
-                <td>Ед. изм</td>
+                <th>Номер</th>
+                <th>Продукт</th>
+                <th>Остаток</th>
+                <th>Требуется</th>
+                <th>Купить</th>
             </tr>
 
             <tr v-for="(item, productName, index) in productsForAllDays">
                 <td>{{ index + 1 }}</td>
                 <td>{{ findProduct(item.product).name }}</td>
                 <td><input type="text" v-model="findProduct(item.product).actualCount" style=" border: 1px dotted;"></td>
-                <td>{{ round(item.countToBuy) }}</td>
-                <td>{{ formatToBuy(item.countToBuy, findProduct(item.product).actualCount) }}</td>
-                <td>{{ productMeasureName(item.product) }}</td>
+                <td>{{ round(item.countToBuy) }}  {{ productMeasureName(item.product) }}</td>
+                <td>{{ formatToBuy(item.product, item.countToBuy, findProduct(item.product).actualCount) }}</td>
             </tr>
         </table>
     </template>

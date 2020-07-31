@@ -12,20 +12,14 @@
 
 <table border="1">
     <tr >
-        <td>Id</td>
-        <td>Продукт</td>
-<!--        <td>Остаток</td>-->
-        <td>Требуется</td>
-<!--        <td>Купить</td>-->
-        <td>Ед. изм</td>
+        <th>Номер</th>
+        <th>Продукт</th>
+        <th>Требуется</th>
     </tr>
     
     <tr v-for="(item, productName, index) in productsPerDay( dayKey )">
         <td>{{ index + 1 }}</td>
         <td>{{ findProduct(item.product).name }}</td>
-<!--        <td><input type="text" v-model="findProduct(item.product).actualCount" style=" border: 1px dotted;width: 50px;"></td>-->
-        <td>{{ round(item.countToBuy) }}</td>
-<!--        <td>{{ formatToBuy(item.countToBuy, findProduct(item.product).actualCount) }}</td>-->
-        <td>{{ productMeasureName(item.product) }}</td>
+        <td>{{ round(item.countToBuy) }} {{ productMeasureName(item.product) }}</td>
     </tr>
 </table>
