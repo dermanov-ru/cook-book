@@ -151,7 +151,7 @@
             <tr>
                 <th>Количество людей</th>
                 <td v-for="(day, dayKey, dayIndex) in days">
-                    <input type="text" v-model="day.peoples">
+                    <input type="text" v-model="day.peoples" style="width: 90%; padding-left: 5px; margin: auto; display: block;">
                 </td>
             </tr>
 
@@ -161,35 +161,53 @@
 
                     <template v-for="(day, dayKey, dayIndex) in days">
                         <td>
-                            <table>
-                                <template  v-for="(meal, mealIndex) in daysMeals[dayKey][eatTimeKey].meals">
-                                    <tr>
-                                        <td>
+                            <table border="1">
+                                <tr >
+                                    <th>Номер</th>
+                                    <th>Рецепт</th>
+                                    <th>Продукты на 1 прием пищи</th>
+                                </tr>
+
+                                <tr v-for="(meal, mealIndex) in daysMeals[dayKey][eatTimeKey].meals">
+                                    <td>{{ mealIndex + 1 }}</td>
+
+                                    <td>
+                                        <nobr>
                                             <select name="" id="" v-model="meal.value">
                                                 <option value="">- Выбрать -</option>
                                                 <option v-for="m in meals" :value="m.id">{{itemPosition(meals, m, true)}} {{m.name}}</option>
                                             </select>
                                             <button @click="removeDayEatTimeMeal(daysMeals[dayKey][eatTimeKey].meals, mealIndex)">X</button>
+                                        </nobr>
+                                    </td>
 
-                                            <br>
+                                    <td>
 
-                                            (
-                                            <template v-if="meal.value">
-                                                <template  v-for="(productsAndCount, productsAndCountIndex) in findMeal(meal.value).productsAndCounts">
-                                                    {{findProduct(productsAndCount.product).name}} X {{ round( round(productsAndCount.count, 2) * day.peoples) }} {{productMeasureName(productsAndCount.product)}}
-                                                    <template v-if="productsAndCountIndex < findMeal(meal.value).productsAndCounts.length - 1">
-                                                        ,<br>
-                                                    </template>
-                                                </template>
-                                            </template>
-                                            )
-                                        </td>
-                                    </tr>
-                                </template>
+                                        <table border="1">
+                                            <tr >
+                                                <th>Номер</th>
+                                                <th>Продукт</th>
+                                                <th>Количество</th>
+                                            </tr>
+
+                                            <tr v-for="(productsAndCount, productsAndCountIndex) in findMeal(meal.value).productsAndCounts">
+                                                <td>{{ productsAndCountIndex + 1 }}</td>
+                                                <td>{{ findProduct(productsAndCount.product).name }}</td>
+                                                <td>{{ round( round(productsAndCount.count, 2) * day.peoples) }} {{productMeasureName(productsAndCount.product)}}</td>
+                                            </tr>
+
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+
                                 <tr>
-                                    <td><button @click="addDayEatTimeMeal(daysMeals[dayKey][eatTimeKey])">Добавить</button></td>
+                                    <td colspan="3" align="right"><button @click="addDayEatTimeMeal(daysMeals[dayKey][eatTimeKey])">Добавить</button></td>
                                 </tr>
                             </table>
+                            
+                            
                         </td>
                     </template>
                 </tr>
